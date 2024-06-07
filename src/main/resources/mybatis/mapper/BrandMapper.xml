@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mybatis.mapper.BrandMapper">
+<!--    sql片段-->
+<!--    <sql id="brand_column">-->
+<!--        id, brand_name as brandName, company_name as companyName, ordered, description, status-->
+<!--    </sql>-->
+<!--    <select id="selectAll" resultType="mybatis.Brand">-->
+<!--        select-->
+<!--            <include refid="brand_column"/>-->
+<!--        from tb_brand;-->
+<!--    </select>-->
+<resultMap id="brandResultMap" type="mybatis.Brand">
+<!--    id：完成主键映射-->
+<!--    result：一般属性映射-->
+    <result column="brand_name" property="brandName"/>
+    <result column="company_name" property="companyName"/>
+</resultMap>
+    <select id="selectAll" resultMap="brandResultMap">
+        select
+        *
+        from tb_brand;
+    </select>
+<!--    占位符:-->
+<!--    #{}: 替换为?，防止sql注入-->
+<!--    ${}:-->
+    <select id="selectById" resultMap="brandResultMap">
+        select
+            *
+        from tb_brand
+        where id = #{id};
+    </select>
+<!--    <select id="selectByCondition" resultMap="brandResultMap">-->
+<!--        select-->
+<!--            *-->
+<!--        from tb_brand-->
+<!--        where status = #{status}-->
+<!--            and company_name like #{companyName}-->
+<!--            and brand_name like #{brandName}-->
+<!--    </select>-->
+    <select id="selectByCondition" resultMap="brandResultMap">
+        select
+            *
+        from tb_brand
+        <where>
+            <if test="status != null">status = #{status}</if>
+            <if test="companyName != null and companyName != ''">and company_name like #{companyName}</if>
+            <if test="brandName != null and brandName != ''">and brand_name like #{brandName}</if>
+        </where>
+    </select>
+    <select id="selectByConditionSingle" resultMap="brandResultMap">
+        select
+        *
+        from tb_brand
+        <where>
+            <choose>
+                <when test="status != null">status = #{status}</when>
+                <when test="companyName != null and companyName != ''">company_name like #{companyName}</when>
+                <when test="brandName != null and brandName != ''">brand_name like #{brandName}</when>
+            </choose>
+        </where>
+    </select>
+</mapper>
