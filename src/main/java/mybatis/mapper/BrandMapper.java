@@ -13,4 +13,8 @@ public interface BrandMapper {
   List<Brand> selectByCondition(Map map);
   List<Brand> selectByCondition(@Param("status")int status, @Param("companyName")String companyName, @Param("brandName")String brandName);
   List<Brand> selectByConditionSingle(Brand brand);
+  void insert(Brand brand);
+  int update(Brand brand);
+  void delete(int id);
+  void deleteByIds(int[] ids);
 }

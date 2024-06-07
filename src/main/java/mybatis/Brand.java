@@ -22,6 +22,17 @@ public class Brand {
   // 状态：0：禁用  1：启用
   private Integer status;
 
+  public Brand(String brandName, String companyName, Integer ordered, String description, Integer status) {
+    this.brandName = brandName;
+    this.companyName = companyName;
+    this.ordered = ordered;
+    this.description = description;
+    this.status = status;
+  }
+
+  public Brand() {
+  }
+
 
   public Integer getId() {
     return id;
